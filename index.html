@@ -1,97 +1,403 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JGL's Portfolio</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600&family=Google+Sans:wght@400;500;700;900&family=Syne:wght@400;700&display=swap" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@400;600&family=Google+Sans:wght@400;500;700;900&family=Syne:wght@400;700&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#0B0710',
-                        darkAccent: '#FF6B6B',
-                        darkText: '#F3E8FF',
-                        lightBg: '#FFF6EA',
-                        lightAccent: '#FA5252',
-                        lightText: '#1A1025',
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-        }
+        /*===BASIC===*/
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         
-        h1, h2, h3, .logo { 
-            font-family: 'Space Grotesk', sans-serif; 
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0B0710;
+            color: #F3E8FF;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-        
-        /* Glassmorphism Effect */
+
         .glass {
             background: rgba(255, 255, 255, 0.03);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Navbar Links */
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        svg.grad-icon { stroke: url(#icon-gradient) !important; }
+
+        /*===NAV===*/
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: #FFF6EA;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            width: 100%;
+        }
+        @media (min-width: 768px) { .nav-container { padding: 20px 40px; } }
+        @media (min-width: 1024px) { .nav-container { padding: 20px 0; } }
+
+        .logo-wrapper { display: flex; align-items: center; gap: 12px; }
+        .logo-tag {
+            font-family: 'Google Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, #FF6B6B, #1A1025);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 900;
+            font-size: 24px;
+            letter-spacing: -0.025em;
+            color: #1A1025;
+            display: none;
+        }
+        @media (min-width: 640px) { .logo-name { display: block; } }
+
+        .nav-links-desktop { display: none; gap: 48px; }
+        @media (min-width: 768px) { .nav-links-desktop { display: flex; } }
+
         .nav-link {
-            color: #1A1025 !important;
+            color: #1A1025;
             opacity: 0.8;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 600;
             text-decoration: none;
+            font-size: 18px;
         }
-
-        .nav-link:hover {
-            opacity: 1;
-            color: #FA5252 !important;
-        }
-
+        .nav-link:hover { opacity: 1; color: #FA5252; }
         .nav-active {
-            color: #FA5252 !important;
-            opacity: 1 !important;
+            color: #FA5252;
+            opacity: 1;
             text-shadow: 0 0 12px rgba(250, 82, 82, 0.4);
-            font-weight: 800 !important;
+            font-weight: 800;
             transform: scale(1.05);
         }
 
-        /* Home Section Gradient */
-        #home {
-            background: linear-gradient(
-                180deg, 
-                #FF6B6B 0%, 
-                #1A1025 100%
-            );
-        }
+        .hamburger-btn { color: #1A1025; background: none; border: none; cursor: pointer; transition: 0.3s; }
+        .hamburger-btn:hover { color: #FA5252; }
+        @media (min-width: 768px) { .hamburger-btn { display: none; } }
 
-        /* Hide Scrollbar for Projects */
-        .hide-scroll::-webkit-scrollbar {
+        .mobile-menu {
             display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 0 32px;
+            gap: 24px;
+            background-color: #FFF6EA;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            border-top: 1px solid rgba(0,0,0,0.05);
         }
-        .hide-scroll {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .mobile-link { font-size: 20px; }
+
+        /*===HOME===*/
+        header#home {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 96px;
+            overflow: hidden;
+            /* GRADIEN WARNA ASLIMU DI SINI */
+            background: linear-gradient(180deg, #FF6B6B 0%, #1A1025 100%);
+            color: #F3E8FF;
+        }
+        @media (min-width: 768px) { header#home { padding-top: 80px; } }
+
+        .hero-container {
+            position: relative;
+            z-index: 20;
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 24px 192px 24px;
+        }
+        @media (min-width: 768px) { .hero-container { padding: 0 64px 0 64px; } }
+        @media (min-width: 1024px) { .hero-container { padding: 0 96px; } }
+
+        .hero-text-area { width: 100%; text-align: left; }
+        @media (min-width: 768px) { .hero-text-area { width: 50%; } }
+
+        .hero-greeting { font-size: 18px; margin-bottom: 8px; font-weight: 500; }
+        @media (min-width: 768px) { .hero-greeting { font-size: 24px; } }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            line-height: 1;
+        }
+        @media (min-width: 768px) { .hero-title { font-size: 96px; } }
+
+        .hero-desc {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            max-width: 36rem;
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.625;
+        }
+        @media (min-width: 768px) { .hero-desc { font-size: 20px; } }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: #FA5252;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.3s;
+            box-shadow: 0 20px 25px -5px rgba(250, 82, 82, 0.2);
+            font-size: 14px;
+            margin-top: 32px;
+        }
+        @media (min-width: 768px) { .hero-btn { padding: 16px 32px; font-size: 16px; margin-top: 40px; } }
+        .hero-btn:hover { transform: scale(1.05); }
+
+        .hero-graphics {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+        @media (min-width: 768px) { .hero-graphics { width: 700px; height: 700px; } }
+
+        .glow-outer { position: absolute; bottom: 5%; right: 5%; width: 200px; height: 200px; background-color: white; border-radius: 50%; filter: blur(60px); opacity: 1; z-index: 0; }
+        @media (min-width: 768px) { .glow-outer { width: 550px; height: 550px; filter: blur(150px); } }
+
+        .glow-inner { position: absolute; bottom: 10%; right: 10%; width: 100px; height: 100px; background-color: white; border-radius: 50%; filter: blur(30px); opacity: 1; z-index: 0; }
+        @media (min-width: 768px) { .glow-inner { width: 350px; height: 350px; filter: blur(80px); } }
+
+        .hero-photo {
+            position: relative;
+            z-index: 10;
+            width: auto;
+            height: 90%;
+            object-fit: contain;
+            object-position: bottom;
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
+            pointer-events: auto;
+            transition: transform 0.5s;
+            margin-right: -5%;
+        }
+        @media (min-width: 768px) { .hero-photo { height: 95%; margin-right: -2%; } }
+        .hero-photo:hover { transform: scale(1.05); }
+
+        /*===PROJECTS===*/
+        #projects { width: 100%; padding: 96px 0; background-color: #1A1025; overflow: hidden; }
+
+        .projects-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 24px;
+            padding: 0 24px 48px;
+            scroll-snap-type: x proximity;
+            scroll-padding-left: 24px;
+            align-items: center;
+        }
+        @media (min-width: 768px) { .projects-slider { gap: 40px; padding: 0 64px 48px; scroll-padding-left: 64px; } }
+        @media (min-width: 1024px) { .projects-slider { padding: 0 96px 48px; scroll-padding-left: 96px; } }
+
+        .projects-title-container { min-width: 200px; flex-shrink: 0; scroll-snap-align: start; }
+        @media (min-width: 768px) { .projects-title-container { min-width: 300px; } }
+
+        .projects-title-wrapper { text-align: right; padding-right: 24px; border-right: 2px solid rgba(255,255,255,0.1); }
+        @media (min-width: 768px) { .projects-title-wrapper { padding-right: 40px; } }
+
+        .projects-subtitle {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 5px; /* Dibuat minus biar nempel ke bawah */
+            color: white;
+            line-height: 1; /* Menghilangkan jarak kosong bawaan teks */
+        }
+        @media (min-width: 768px) { 
+            .projects-subtitle { 
+                font-size: 48px; 
+                margin-bottom: 10px; /* Di laptop minusnya dibesarin biar pas */
+            } 
         }
 
-        svg.grad-icon {
-            stroke: url(#icon-gradient) !important;
+        .projects-main-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -0.05em;
+            line-height: 1; /* Menghilangkan jarak kosong bawaan teks */
         }
+        @media (min-width: 768px) { 
+            .projects-main-title { 
+                font-size: 72px; 
+            } 
+        }
+
+        /* Project Card */
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            width: 280px;
+            border-radius: 32px;
+            padding: 20px;
+            scroll-snap-align: start;
+            flex: none;
+            background: linear-gradient(to bottom, #FFF6EA, #FA5252);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s;
+            cursor: pointer;
+            text-align: left;
+            text-decoration: none;
+        }
+        @media (min-width: 640px) { .project-card { width: 320px; } }
+        @media (min-width: 768px) { .project-card { width: 380px; padding: 24px; } }
+        .project-card:hover { transform: scale(1.02); }
+
+        .card-image-wrapper { height: 160px; width: 100%; background-color: #0B0710; border-radius: 20px; margin-bottom: 24px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); overflow: hidden; }
+        @media (min-width: 768px) { .card-image-wrapper { height: 192px; } }
+        .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .project-card:hover .card-image { transform: scale(1.1); }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px; /* text-xl */
+            font-weight: 700;
+            color: #1A1025;
+            margin-bottom: 12px;
+        }
+        @media (min-width: 768px) { .card-title { font-size: 24px; /* text-2xl */ } }
+
+        .card-desc {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 12px; /* text-xs */
+            color: rgba(255,255,255,0.9);
+            line-height: 1.625;
+            font-weight: 500;
+        }
+        @media (min-width: 768px) { .card-desc { font-size: 14px; /* text-sm */ } }
+
+        .slider-spacer { width: 20px; flex: none; }
+        @media (min-width: 768px) { .slider-spacer { width: 40px; } }
+
+        /*===ABOUT===*/
+        #about { width: 100%; padding: 96px 0; background: linear-gradient(to bottom, #0B0710, #0B0710); }
+
+        .about-container { max-width: 1280px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 48px; padding: 0 24px; }
+        @media (min-width: 768px) { .about-container { flex-direction: row; padding: 0 64px; } }
+        @media (min-width: 1024px) { .about-container { padding: 0; } }
+
+        .about-text-area { flex: 1; text-align: center; }
+        @media (min-width: 768px) { .about-text-area { text-align: left; } }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px; /* text-4xl */
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: #FF6B6B; /* text-darkAccent */
+            letter-spacing: 0.1em; /* tracking-widest */
+        }
+        @media (min-width: 768px) { .section-heading { font-size: 48px; /* text-5xl */ } }
+        .section-heading span { font-weight: 900; font-size: 36px; }
+        @media (min-width: 768px) { .section-heading span { font-size: 48px; } }
+
+        .about-p1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.625; opacity: 0.9; font-weight: 700; margin-bottom: 24px; }
+        .about-p2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.625; opacity: 0.8; margin-bottom: 24px; }
+        .about-p3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; line-height: 1.625; opacity: 0.8; font-style: italic; }
+        @media (min-width: 768px) { .about-p1, .about-p2, .about-p3 { font-size: 20px; } }
+
+        .about-photo-wrapper { width: 224px; height: 224px; flex-shrink: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(250, 82, 82, 0.3); overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        @media (min-width: 640px) { .about-photo-wrapper { width: 256px; height: 256px; } }
+        @media (min-width: 768px) { .about-photo-wrapper { width: 320px; height: 320px; } }
+        .about-photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        /*===CONTACT===*/
+        #contact { width: 100%; padding: 96px 0; text-align: center; background: linear-gradient(to bottom, #0B0710, #1A1025); }
+
+        .contact-container { max-width: 1280px; margin: 0 auto; width: 100%; padding: 0 24px; }
+        @media (min-width: 768px) { .contact-container { padding: 0 64px; } }
+        @media (min-width: 1024px) { .contact-container { padding: 0; } }
+
+        .contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 48px; }
+        @media (min-width: 768px) { .contact-buttons { gap: 24px; } }
+
+        .contact-btn {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 12px 16px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s;
+            font-size: 16px; /* text-base */
+            font-weight: 500;
+            text-decoration: none;
+            color: #F3E8FF;
+            width: fit-content;
+            max-width: 100%;
+        }
+        @media (min-width: 768px) { .contact-btn { padding: 16px 24px; font-size: 20px; /* text-xl */ } }
+        .contact-btn:hover { transform: scale(1.05); }
+
+        .contact-icon { width: 20px; height: 20px; }
+        @media (min-width: 768px) { .contact-icon { width: 24px; height: 24px; } }
+
+        /*===FOOTER===*/
+        footer { width: 100%; background-color: #FFF6EA; box-shadow: 0 -1px 3px rgba(0,0,0,0.1); border-top: 1px solid rgba(0,0,0,0.05); margin-top: auto; }
+
+        .footer-container { max-width: 1280px; margin: 0 auto; padding: 24px; text-align: center; }
+        @media (min-width: 768px) { .footer-container { padding: 24px 64px; } }
+        @media (min-width: 1024px) { .footer-container { padding: 24px 96px; } }
+
+        .footer-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 900;
+            background: linear-gradient(to right, #FF6B6B, #1A1025);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @media (min-width: 768px) { .footer-text { font-size: 18px; } }
     </style>
 </head>
 
-<body class="bg-darkBg text-darkText flex flex-col min-h-screen">
+<body>
 
-    <svg width="0" height="0" class="absolute pointer-events-none">
+    <svg width="0" height="0" style="position:absolute; pointer-events:none;">
         <defs>
             <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#FF6B6B" />
@@ -100,228 +406,179 @@
         </defs>
     </svg>
 
-    <nav class="fixed top-0 w-full z-50 bg-[#FFF6EA] rounded-b-[30px] shadow border-b border-black/5 transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-10 lg:px-0 py-5 w-full">
-            
-            <div class="flex items-center gap-3">
-                <span class="text-2xl tracking-tighter font-black bg-clip-text text-transparent bg-gradient-to-r from-[#FF6B6B] to-[#1A1025]" style="font-family: 'Google Sans', sans-serif;">
-                    &lt;/JGL.&gt;
-                </span>
-                <span class="text-[#1A1025] font-black text-2xl tracking-tight hidden sm:block" style="font-family: 'Syne', sans-serif;">
-                    JGL's Portfolio
-                </span>
+    <nav>
+        <div class="nav-container">
+            <div class="logo-wrapper">
+                <span class="logo-tag">&lt;/JGL.&gt;</span>
+                <span class="logo-name">JGL's Portfolio</span>
             </div>
 
-            <div class="hidden md:flex gap-12">
-                <a href="#home" class="nav-link text-lg">Home</a>
-                <a href="#projects" class="nav-link text-lg">Projects</a>
-                <a href="#about" class="nav-link text-lg">About</a>
-                <a href="#contact" class="nav-link text-lg">Contact</a>
+            <div class="nav-links-desktop">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
 
-            <button id="menu-btn" class="md:hidden text-[#1A1025] hover:text-[#FA5252] transition focus:outline-none">
-                <i data-lucide="menu" class="w-8 h-8"></i>
+            <button id="menu-btn" class="hamburger-btn">
+                <i data-lucide="menu" style="width:32px; height:32px;"></i>
             </button>
-            
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden flex-col items-center pb-8 pt-4 gap-6 bg-[#FFF6EA] rounded-b-[30px] border-t border-black/5 shadow-inner">
-            <a href="#home" class="nav-link text-xl mobile-link">Home</a>
-            <a href="#projects" class="nav-link text-xl mobile-link">Projects</a>
-            <a href="#about" class="nav-link text-xl mobile-link">About</a>
-            <a href="#contact" class="nav-link text-xl mobile-link">Contact</a>
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#home" class="nav-link mobile-link">Home</a>
+            <a href="#projects" class="nav-link mobile-link">Projects</a>
+            <a href="#about" class="nav-link mobile-link">About</a>
+            <a href="#contact" class="nav-link mobile-link">Contact</a>
         </div>
     </nav>
 
-    <header id="home" class="relative min-h-screen flex items-center pt-24 md:pt-20 overflow-hidden bg-darkBg text-darkText">
-        
-        <div class="relative z-20 max-w-7xl mx-auto w-full px-6 md:px-16 lg:px-24 pb-48 md:pb-0">
-            <div class="md:w-1/2 text-left">
-                <p class="text-lg md:text-2xl mb-2 font-medium">Hi, I'm</p>
-                <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight" style="font-family: 'Space Grotesk', sans-serif;">
-                    Jonathan<br>Gideon<br>Lamidjan
-                </h1>
-                <p class="max-w-xl text-base md:text-xl opacity-90 leading-relaxed" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                    Aku adalah siswa kelas XI Informatika yang sedang belajar membuat website menggunakan HTML dan CSS.
-                </p>
-                <div class="mt-8 md:mt-10">
-                    <a href="#projects" class="inline-block bg-[#FA5252] text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold transition hover:scale-105 shadow-xl shadow-red-500/20 text-sm md:text-base">
-                        Lihat Project-ku
-                    </a>
-                </div>
+    <header id="home">
+        <div class="hero-container">
+            <div class="hero-text-area">
+                <p class="hero-greeting">Hi, I'm</p>
+                <h1 class="hero-title">Jonathan<br>Gideon<br>Lamidjan</h1>
+                <p class="hero-desc">Aku adalah siswa kelas XI Informatika yang sedang belajar membuat website menggunakan HTML dan CSS.</p>
+                
+                <a href="#projects" class="hero-btn">Lihat Project-ku</a>
             </div>
         </div>
 
-        <div class="absolute bottom-0 right-0 w-[300px] md:w-[700px] h-[300px] md:h-[700px] z-10 pointer-events-none flex items-end justify-end">
-            <div class="absolute bottom-[5%] right-[5%] w-[200px] md:w-[550px] h-[200px] md:h-[550px] bg-white opacity-100 rounded-full blur-[60px] md:blur-[150px] z-0"></div>
-            <div class="absolute bottom-[10%] right-[10%] w-[100px] md:w-[350px] h-[100px] md:h-[350px] bg-white opacity-100 rounded-full blur-[30px] md:blur-[80px] z-0"></div>
-            <img src="fotoprofil-nobg.png" alt="Jonathan" class="relative z-10 w-auto h-[90%] md:h-[95%] object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto transition hover:scale-105 duration-500 mr-[-5%] md:mr-[-2%]">
+        <div class="hero-graphics">
+            <div class="glow-outer"></div>
+            <div class="glow-inner"></div>
+            <img src="fotoprofil-nobg.png" alt="Jonathan" class="hero-photo">
         </div>
-
     </header>
 
     <main>
-        <section id="projects" class="w-full py-24 bg-[#1A1025] overflow-hidden">
-            <div class="flex overflow-x-auto hide-scroll gap-6 md:gap-10 px-6 md:px-16 lg:px-24 pb-12 snap-x snap-proximity scroll-pl-6 md:scroll-pl-16 lg:scroll-pl-24 items-center">
-    
-                <div class="min-w-[200px] md:min-w-[300px] flex-shrink-0 snap-start">
-                    <div class="text-right pr-6 md:pr-10 border-r-2 border-white/10">
-                        <p class="text-2xl md:text-5xl font-medium mb-1 md:mb-4 text-white" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                            My
-                        </p>
-                        <h2 class="text-4xl md:text-7xl font-black text-white tracking-tighter" style="font-family: 'Space Grotesk', sans-serif;">
-                            PROJECTS
-                        </h2>
+        
+        <section id="projects">
+            <div class="projects-slider hide-scroll">
+                
+                <div class="projects-title-container">
+                    <div class="projects-title-wrapper">
+                        <p class="projects-subtitle">My</p>
+                        <h2 class="projects-main-title">PROJECTS</h2>
                     </div>
                 </div>
     
-                <a href="https://jojogid34.github.io/Word-Chain-Battle-EN-ID/" target="_blank" class="group block w-[280px] sm:w-[320px] md:w-[380px] rounded-[32px] p-5 md:p-6 flex flex-col snap-start flex-none bg-gradient-to-b from-[#FFF6EA] to-[#FA5252] shadow-2xl hover:scale-[1.02] transition-transform duration-300 whitespace-normal cursor-pointer text-left">
-                    <div class="h-40 md:h-48 w-full bg-[#0B0710] rounded-[20px] mb-6 shadow-inner overflow-hidden">
-                        <img src="wordchainbattle.png" alt="Word Chain Battle Game" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <a href="https://jojogid34.github.io/Word-Chain-Battle-EN-ID/" target="_blank" class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="wordchainbattle.png" alt="Word Chain Battle Game" class="card-image">
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#1A1025] mb-3" style="font-family: 'Space Grotesk', sans-serif;">
-                        Word Chain Battle Game
-                    </h3>
-                    <p class="text-xs md:text-sm text-white/90 leading-relaxed font-medium" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        Game adu kosa kata interaktif yang asik banget buat dimainin! Di project ini, aku belajar banyak soal logika pemrograman untuk ngecek input teks dan nyambungin kata demi kata. (Dibuat pada saat kelas ELS Coding dengan menggunakan Canva AI)
-                    </p>
+                    <h3 class="card-title">Word Chain Battle Game</h3>
+                    <p class="card-desc">Game adu kosa kata interaktif yang asik banget buat dimainin! Di project ini, aku belajar banyak soal logika pemrograman untuk ngecek input teks dan nyambungin kata demi kata. (Dibuat pada saat kelas ELS Coding dengan menggunakan Canva AI)</p>
                 </a>
     
-                <a href="https://jojogid34.github.io/Simple-Daily-Planner-App/" target="_blank" class="group block w-[280px] sm:w-[320px] md:w-[380px] rounded-[32px] p-5 md:p-6 flex flex-col snap-start flex-none bg-gradient-to-b from-[#FFF6EA] to-[#FA5252] shadow-2xl hover:scale-[1.02] transition-transform duration-300 whitespace-normal cursor-pointer text-left">
-                    <div class="h-40 md:h-48 w-full bg-[#0B0710] rounded-[20px] mb-6 shadow-inner overflow-hidden">
-                        <img src="dailyplannerpro.png" alt="Daily Planner App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <a href="https://jojogid34.github.io/Simple-Daily-Planner-App/" target="_blank" class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="dailyplannerpro.png" alt="Daily Planner App" class="card-image">
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#1A1025] mb-3" style="font-family: 'Space Grotesk', sans-serif;">
-                        Daily Planner App
-                    </h3>
-                    <p class="text-xs md:text-sm text-white/90 leading-relaxed font-medium" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        Aplikasi to-do list simpel buat bantu nyatet dan ngatur jadwal harian. Lewat project ini, aku melatih cara bikin fitur tambah-hapus tugas biar webnya nggak cuma bagus, tapi juga fungsional. (Dibuat pada saat kelas ELS Coding dengan menggunakan Canva AI)
-                    </p>
+                    <h3 class="card-title">Daily Planner App</h3>
+                    <p class="card-desc">Aplikasi to-do list simpel buat bantu nyatet dan ngatur jadwal harian. Lewat project ini, aku melatih cara bikin fitur tambah-hapus tugas biar webnya nggak cuma bagus, tapi juga fungsional. (Dibuat pada saat kelas ELS Coding dengan menggunakan Canva AI)</p>
                 </a>
     
-                <a href="https://jojogid34.github.io/Fireworks-Animation-HTML/" target="_blank" class="group block w-[280px] sm:w-[320px] md:w-[380px] rounded-[32px] p-5 md:p-6 flex flex-col snap-start flex-none bg-gradient-to-b from-[#FFF6EA] to-[#FA5252] shadow-2xl hover:scale-[1.02] transition-transform duration-300 whitespace-normal cursor-pointer text-left">
-                    <div class="h-40 md:h-48 w-full bg-[#0B0710] rounded-[20px] mb-6 shadow-inner overflow-hidden">
-                        <img src="fireworks.png" alt="Fireworks Animation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <a href="https://jojogid34.github.io/Fireworks-Animation-HTML/" target="_blank" class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="fireworks.png" alt="Fireworks Animation" class="card-image">
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#1A1025] mb-3" style="font-family: 'Space Grotesk', sans-serif;">
-                        Fireworks Animation
-                    </h3>
-                    <p class="text-xs md:text-sm text-white/90 leading-relaxed font-medium" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        Eksperimen visual bikin animasi kembang api yang cantik. Di sini aku bener-bener ngeksplorasi kemampuan CSS dan manipulasi elemen web buat nyiptain efek visual yang mulus dan memanjakan mata. Dibuat dari keinginan untuk bisa bermain kembang api dengan cara yang aman (yaitu digital ☺)
-                    </p>
+                    <h3 class="card-title">Fireworks Animation</h3>
+                    <p class="card-desc">Eksperimen visual bikin animasi kembang api yang cantik. Di sini aku bener-bener ngeksplorasi kemampuan CSS dan manipulasi elemen web buat nyiptain efek visual yang mulus dan memanjakan mata. Dibuat dari keinginan untuk bisa bermain kembang api dengan cara yang aman (yaitu digital ☺)</p>
                 </a>
     
-                <a href="https://jojogid34.github.io/Portfolio-Jonathan-Gideon-STS-Infor2-K11-S2/" target="_blank" class="group block w-[280px] sm:w-[320px] md:w-[380px] rounded-[32px] p-5 md:p-6 flex flex-col snap-start flex-none bg-gradient-to-b from-[#FFF6EA] to-[#FA5252] shadow-2xl hover:scale-[1.02] transition-transform duration-300 whitespace-normal cursor-pointer text-left">
-                    <div class="h-40 md:h-48 w-full bg-[#0B0710] rounded-[20px] mb-6 shadow-inner overflow-hidden">
-                        <img src="portfoliocard.png" alt="Portfolio Card" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <a href="https://jojogid34.github.io/Portfolio-Jonathan-Gideon-STS-Infor2-K11-S2/" target="_blank" class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="portfoliocard.png" alt="Portfolio Card" class="card-image">
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-[#1A1025] mb-3" style="font-family: 'Space Grotesk', sans-serif;">
-                        Portfolio Card
-                    </h3>
-                    <p class="text-xs md:text-sm text-white/90 leading-relaxed font-medium" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                        Kartu profil digital bergaya modern dan elegan. Fokus utamaku di project ini adalah bikin layout yang responsif dan ngasih efek hover interaktif biar kelihatan kayak web profesional. (Ini adalah versi portfolio card-ku sebagai project PSTS)
-                    </p>
+                    <h3 class="card-title">Portfolio Card</h3>
+                    <p class="card-desc">Kartu profil digital bergaya modern dan elegan. Fokus utamaku di project ini adalah bikin layout yang responsif dan ngasih efek hover interaktif biar kelihatan kayak web profesional. (Ini adalah versi portfolio card-ku sebagai project PSTS)</p>
                 </a>
     
-                <div class="w-[20px] md:w-[40px] flex-none"></div>
-    
+                <div class="slider-spacer"></div>
             </div>
         </section>
     
-        <section id="about" class="w-full py-24 bg-gradient-to-b from-[#0B0710]">
-            <div class="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center gap-12 px-6 md:px-16 lg:px-0">
-                <div class="flex-1 text-center md:text-left">
-                    <h2 class="text-4xl md:text-5xl font-normal mb-6 text-darkAccent tracking-widest" id="about-title">
-                        <span class="font-black text-4xl md:text-5xl">A</span>BOUT 
-                        <span class="font-black text-4xl md:text-5xl">T</span>HIS 
-                        <span class="font-black text-4xl md:text-5xl">W</span>EBSITE
+        <section id="about">
+            <div class="about-container">
+                <div class="about-text-area">
+                    <h2 class="section-heading" id="about-title">
+                        <span>A</span>BOUT 
+                        <span>T</span>HIS 
+                        <span>W</span>EBSITE
                     </h2>
-                    <p class="text-lg md:text-xl leading-relaxed opacity-90 font-bold mb-6">
+                    <p class="about-p1">
                         Welcome to my digital portfolio page!<br>
                         Website satu halaman yang simpel ini aku buat untuk menampilkan profil, kemampuan, dan karyaku.
                     </p>
-    
-                    <p class="text-lg md:text-xl leading-relaxed opacity-80 mb-6">
+                    <p class="about-p2">
                         Mulai dari eksperimen bikin layout web pakai HTML dan CSS, sampai dokumentasi project-project seru lainnya, semuanya aku kumpulin di sini sebagai jejak digital dari setiap proses belajarku.
                     </p>
-    
-                    <p class="text-lg md:text-xl leading-relaxed opacity-80 italic">
+                    <p class="about-p3">
                         (PS: Ini juga jadi hasilku untuk Project PSAT Infor Kelas 11 loh...)
                     </p>
                 </div>
-                <div class="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 flex-shrink-0 glass rounded-full flex items-center justify-center border-2 border-[#FA5252]/30 overflow-hidden shadow-2xl">
-                    <img src="fotoprofil.jpg" alt="Foto Profil" class="w-full h-full object-cover">
+                <div class="about-photo-wrapper glass">
+                    <img src="fotoprofil.jpg" alt="Foto Profil">
                 </div>
             </div>
         </section>
     
-        <section id="contact" class="w-full py-24 text-center bg-gradient-to-b from-[#0B0710] to-[#1A1025]">
-            <div class="max-w-7xl mx-auto w-full px-6 md:px-16 lg:px-0">
-                <h2 class="text-4xl md:text-5xl font-normal mb-12 tracking-widest">
-                    <span class="font-black text-4xl md:text-5xl">C</span>ONTACT
+        <section id="contact">
+            <div class="contact-container">
+                <h2 class="section-heading">
+                    <span>C</span>ONTACT
                 </h2>
-                <div class="flex flex-wrap justify-center gap-4 md:gap-6">
-                    <a href="https://instagram.com/jojo.gid_l" class="glass px-4 md:px-6 py-3 md:py-4 rounded-2xl flex items-center gap-3 hover:scale-105 transition text-base md:text-xl font-medium">
-                        <i data-lucide="instagram" class="w-5 h-5 md:w-6 md:h-6 grad-icon"></i> @jojo.gid_l
+                <div class="contact-buttons">
+                    <a href="https://instagram.com/jojo.gid_l" class="contact-btn glass">
+                        <i data-lucide="instagram" class="contact-icon grad-icon"></i> @jojo.gid_l
                     </a>
-                    <a href="https://wa.me/6289643010219" class="glass px-4 md:px-6 py-3 md:py-4 rounded-2xl flex items-center gap-3 hover:scale-105 transition text-base md:text-xl font-medium">
-                        <i data-lucide="phone" class="w-5 h-5 md:w-6 md:h-6 grad-icon"></i> +62 896-4301-0219
+                    <a href="https://wa.me/6289643010219" class="contact-btn glass">
+                        <i data-lucide="phone" class="contact-icon grad-icon"></i> +62 896-4301-0219
                     </a>
-                    <a href="mailto:lamidjan.jonathan@gmail.com" class="glass px-4 md:px-6 py-3 md:py-4 rounded-2xl flex items-center gap-3 hover:scale-105 transition text-base md:text-xl font-medium w-full sm:w-auto justify-center">
-                        <i data-lucide="mail" class="w-5 h-5 md:w-6 md:h-6 grad-icon"></i> lamidjan.jonathan@gmail.com
+                    <a href="mailto:lamidjan.jonathan@gmail.com" class="contact-btn glass">
+                        <i data-lucide="mail" class="contact-icon grad-icon"></i> lamidjan.jonathan@gmail.com
                     </a>
                 </div>
             </div>
         </section>
+
     </main>
     
-    <footer class="w-full bg-[#FFF6EA] shadow border-t border-black/5 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 md:px-16 lg:px-24 py-6 text-center">
-            <p class="text-sm md:text-lg font-black bg-clip-text text-transparent bg-gradient-to-r from-[#FF6B6B] to-[#1A1025]" style="font-family: 'Space Grotesk', sans-serif;">
+    <footer>
+        <div class="footer-container">
+            <p class="footer-text">
                 © 2026 - Jonathan Gideon Lamidjan | XI INFORMATIKA 2 [XI-1 / 13]
             </p>
         </div>
     </footer>
 
     <script>
-        // Inisialisasi Icon
         lucide.createIcons();
 
-        // LOGIKA MENU HAMBURGER (Baru Ditambahkan)
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = menuBtn.querySelector('i');
         const mobileLinks = document.querySelectorAll('.mobile-link');
 
-        // Saat tombol ditekan
         menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('flex');
-            
-            // Ganti icon dari garis 3 (menu) jadi silang (x)
-            if (mobileMenu.classList.contains('flex')) {
-                menuIcon.setAttribute('data-lucide', 'x');
-            } else {
-                menuIcon.setAttribute('data-lucide', 'menu');
-            }
+            const isHidden = mobileMenu.style.display === 'none' || mobileMenu.style.display === '';
+            mobileMenu.style.display = isHidden ? 'flex' : 'none';
+            menuIcon.setAttribute('data-lucide', isHidden ? 'x' : 'menu');
             lucide.createIcons();
         });
 
-        // Saat salah satu menu di HP di klik, menu otomatis tertutup
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
+                mobileMenu.style.display = 'none';
                 menuIcon.setAttribute('data-lucide', 'menu');
                 lucide.createIcons();
             });
         });
 
-        // 1. Ambil semua link navigasi dan semua section
         const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section');
+        const sections = document.querySelectorAll('header, section');
 
-        // 2. Setting "Teropong" (Intersection Observer)
         const observerOptions = {
             rootMargin: "-30% 0px -60% 0px",
             threshold: 0
@@ -340,7 +597,6 @@
             });
         }, observerOptions);
 
-        // 3. Suruh si teropong buat jagain tiap section
         sections.forEach(section => {
             observer.observe(section);
         });        
